@@ -129,7 +129,6 @@ module Chorale.Common (
     -- * Number Operations
     average,
     -- * String Operations
-    strip,
     justifyLeft,
     justifyRight,
     -- * Maybe Operations
@@ -147,7 +146,6 @@ import qualified Data.Map as Map
 import Data.Maybe
 import Data.Ord
 import qualified Data.Set as Set
-import qualified Data.Text as T
 import Safe
 
 -- --== APPLICATIVE
@@ -649,10 +647,6 @@ average xs
     | otherwise = uncurry (/) . map21 (sum, fromIntegral . length) $ xs
 
 -- --== STRING OPERATIONS
-
--- | remove leading and trailing white space
-strip :: String -> String
-strip = T.unpack . T.strip . T.pack
 
 -- | append a char as often as needed in order to return a string of given length where the given string ist justified left
 justifyLeft :: Int -> Char -> String -> String
