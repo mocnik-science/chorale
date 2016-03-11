@@ -1,5 +1,9 @@
 name: chorale
 version: 0.1.0
+synopsis: module containing basic functions that the prelude does not offer
+description:
+  Chorale is a Haskell module that contains basic functions that the prelude
+  does not offer. The prelude is (traditionally) followed by a chorale ...
 author: Franz-Benjamin Mocnik <mail@mocnik-science.net>
 maintainer: Franz-Benjamin Mocnik <mail@mocnik-science.net>
 copyright: (c) by Franz-Benjamin Mocnik, 2013-2016
@@ -19,7 +23,7 @@ library
     -Wall
     -O2
   build-depends:
-    base,
-    containers,
-    safe,
-    text
+    base >= 4.8,
+    containers >= 0.5.6,
+    safe >= 0.3.8,
+    text >= 1.2
