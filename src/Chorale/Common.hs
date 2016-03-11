@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Chorale.Common
--- Copyright   :  (c) by Franz-Benjamin Mocnik, 2013-2016
+-- Copyright   :  2013-2016 Franz-Benjamin Mocnik
 -- License     :  MIT
 --
 -- Maintainer  :  mail@mocnik-science.net
@@ -150,17 +150,17 @@ import Safe
 
 -- --== APPLICATIVE
 
--- | f . g a $ b = (f .* g) a b
+-- | @f . g a $ b = (f .* g) a b@
 infixr 8 .*
 (.*) :: (c -> d) -> (a -> b -> c) -> a -> b -> d
 (.*) = (.) . (.)
 
--- | f . g a b $ c = (f .** g) a b c
+-- | @f . g a b $ c = (f .** g) a b c@
 infixr 8 .**
 (.**) :: (d -> e) -> (a -> b -> c -> d) -> a -> b -> c -> e
 (.**) = (.) . (.*)
 
--- | f . g a b c $ d = (f .** g) a b c d
+-- | @f . g a b c $ d = (f .** g) a b c d@
 infixr 8 .***
 (.***) :: (e -> f) -> (a -> b -> c -> d -> e) -> a -> b -> c -> d -> f
 (.***) = (.) . (.**)
@@ -466,9 +466,11 @@ mapSnd g = map22 (id, g)
 
 -- --== MONADS AND TUPLES
 
+-- | like 'sequence' but for a 2-tuple
 sequence2 :: (Functor m, Monad m) => (m a, m a) -> m (a, a)
 sequence2 = fmap (fromJust . listToTuple2) . sequence . tupleToList2
 
+-- | like '>>' but with reversed argument
 (<<) :: (Monad m) => m b -> m a -> m b
 m1 << m2 = m2 >> m1
 
@@ -482,7 +484,7 @@ compareUsing as = uncurry compare .* curry (map12 (`elemIndex` as))
 
 -- --== COMPARING AND SORTING
 
--- | tests if a given number vanishes
+-- | tests whether a given number vanishes
 vanishes :: (Num a, Eq a) => a -> Bool
 vanishes = (==) 0
 
@@ -504,7 +506,7 @@ sortAndGroupLookupBy f = map (map21 (f . head, id)) . sortAndGroupBy f
 
 -- --== LIST OPERATIONS
 
--- | returns False if a list is empty, otherwise True
+-- | returns 'False' if a list is empty, otherwise 'True'
 notNull :: [a] -> Bool
 notNull = not . null
 
@@ -549,7 +551,7 @@ nubOrd = s Set.empty where
         | Set.member x m = s m xs
         | otherwise = x : s (Set.insert x m) xs
 
--- | like 'nubBy' but requires 'a' to be an instance of 'Ord'
+-- | like 'nubBy' but requires 'b' to be an instance of 'Ord'
 --
 -- @nubOrdBy' f = nubBy (equaling f)@
 -- The original 'nubBy' is O(n^2) on lists of length n. 'nubOrdBy'' is O(n log(n)).
@@ -568,7 +570,7 @@ zipWithDefault a0 f [] (b:bs) = f a0 b : zipWithDefault a0 f [] bs
 zipWithDefault a0 f (a:as) [] = f a a0 : zipWithDefault a0 f as []
 zipWithDefault _ _ _ _ = []
 
--- | test if the first list is a subset of the second one
+-- | test whether the first list is a subset of the second one
 subset :: Eq a => [a] -> [a] -> Bool
 subset as bs = all (`elem` bs) as
 
@@ -603,7 +605,7 @@ replaceElementInList a bs as = case elemIndex a as of
 removeFromList :: Int -> [a] ->[a]
 removeFromList j = replaceInList j []
 
--- | like 'stripPrefix' but for postfixes
+-- | like 'stripPrefix' but for postfixes
 stripPostfix :: Eq a => [a] -> [a] -> Maybe [a]
 stripPostfix = curry $ mapJust reverse . uncurry stripPrefix . map12 reverse
 
@@ -679,15 +681,15 @@ mapLeft f = either (Left . f) Right
 mapRight :: (b -> c) -> Either a b -> Either a c
 mapRight f = either Left (Right . f)
 
--- | returns left value
+-- | returns 'Left' value
 fromLeft :: Either a b -> a
 fromLeft (Left a) = a
 fromLeft _ = error "Error: fromLeft on Right"
 
--- | returns right value
+-- | returns 'Right' value
 fromRight :: Either a b -> b
 fromRight (Right b) = b
 fromRight _ = error "Error: fromRight on Left"
 
--- | Either type for 3 values
+-- | 'Either'-like type for 3 values
 data Either3 a b c = E1 a | E2 b | E3 c
