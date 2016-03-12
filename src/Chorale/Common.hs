@@ -126,6 +126,9 @@ module Chorale.Common (
     deleteAll,
     deleteAlls,
     cartesian,
+    -- * Boolean Operations
+    xor,
+    xnor,
     -- * Number Operations
     average,
     -- * String Operations
@@ -639,6 +642,16 @@ deleteAlls = flip $ foldr deleteAll
 -- | cartesian product
 cartesian :: [a] -> [b] -> [(a, b)]
 cartesian as bs = [(a, b) | a <- as, b <- bs]
+
+-- --== BOOLEAN OPERATORS
+
+-- | xor function
+xor :: Bool -> Bool -> Bool
+xor a = xnor (not a)
+
+-- | xnor function
+xnor :: Bool -> Bool -> Bool
+xnor a b = (a && b) || (not a && not b)
 
 -- --== NUMBER OPERATIONS
 
