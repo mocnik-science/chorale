@@ -114,6 +114,7 @@ module Chorale.Common (
     sortAndGroup,
     sortAndGroupBy,
     sortAndGroupLookupBy,
+    lookupBy,
     -- * List Operations
     notNull,
     takeWhileList,
@@ -580,6 +581,12 @@ sortAndGroupBy f = groupBy (equaling f) . sortBy (comparing f)
 -- | sort and than group to a lookup table
 sortAndGroupLookupBy :: Ord b => (a -> b) -> [a] -> [(b, [a])]
 sortAndGroupLookupBy f = map (map21 (f . head, id)) . sortAndGroupBy f
+
+-- | lookup by using a function
+--
+-- @lookupBy f b xs@ finds the element @x@ which satisfies @f x = b@
+lookupBy :: Eq b => (a -> b) -> b -> [a] -> Maybe a
+lookupBy f b = lookup b . map (map21 (f, id))
 
 -- --== LIST OPERATIONS
 

@@ -59,6 +59,7 @@ caseXnor4 = assertEqualBool "" False (xnor False True)
 
 testGroupCommon :: Test
 testGroupCommon = testGroup "FBM.Common.Common" [
+        testProperty "lookupBy" propLookupBy,
         testProperty "takeWhileList" propTakeWhileList,
         testProperty "takeToFirst" propTakeToFirst,
         testProperty "splitOnFirst" propSplitOnFirst,
@@ -72,6 +73,15 @@ testGroupCommon = testGroup "FBM.Common.Common" [
         testProperty "applyToList 3" propApplyToList3,
         testProperty "applyToList 4" propApplyToList4
     ]
+
+-- @lookupBy f b xs@ finds the element @x@ which satisfies @f x = b@
+propLookupBy :: Int -> Int -> [Int] -> Bool
+propLookupBy fn b xs = let
+        l = lookupBy f b xs
+        f = (* fn)
+    in case l of
+        Just l' -> f l' == b
+        Nothing -> b `notElem` map f xs
 
 -- | @takeWhile p == takeWhileList (p . head)@
 propTakeWhileList :: Int -> Int -> [Int] -> Property
