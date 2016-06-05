@@ -106,6 +106,11 @@ module Chorale.Common (
     sequence4,
     sequence5,
     (<<),
+    -- * Functions
+    const2,
+    const3,
+    const4,
+    const5,
     -- * Ordering
     compareUsing,
     -- * Comparing and Sorting
@@ -556,6 +561,24 @@ sequence5 (a, b, c, d, e) = do
 -- | like '>>' but with reversed argument
 (<<) :: (Monad m) => m b -> m a -> m b
 m1 << m2 = m2 >> m1
+
+-- --== FUNCTINOS
+
+-- | like 'const' but with 2 arguments
+const2 :: a -> b -> c -> a
+const2 a _ _ = a
+
+-- | like 'const' but with 3 arguments
+const3 :: a -> b -> c -> d -> a
+const3 a _ _ _ = a
+
+-- | like 'const' but with 4 arguments
+const4 :: a -> b -> c -> d -> e -> a
+const4 a _ _ _ _ = a
+
+-- | like 'const' but with 5 arguments
+const5 :: a -> b -> c -> d -> e -> f -> a
+const5 a _ _ _ _ _ = a
 
 -- --== ORDERING
 
