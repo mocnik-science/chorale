@@ -126,7 +126,12 @@ module Chorale.Common (
     zipWithDefault,
     subset,
     subsets,
+    sublistByIndex,
     findIndicesTuples,
+    minimumIndex,
+    minimumIndexBy,
+    maximumIndex,
+    maximumIndexBy,
     replaceInList,
     replaceElementInList,
     removeFromList,
@@ -663,9 +668,29 @@ subsets :: [a] -> [[a]]
 subsets [] = [[]]
 subsets (a:as) =  uncurry (++) . map21 (id, map (a:)) . subsets $ as
 
+-- | 'sublistByIndex' @(i, j) xs@ returns the sublist of @xs@ starting at index @i@ and ending index @j@
+sublistByIndex :: (Int, Int) -> [a] -> [a]
+sublistByIndex (i, j) = drop i . take (j + 1)
+
 -- | like 'findIndices' but results a list of tuples (x, i) where x is the list and i the index
 findIndicesTuples :: (a -> Bool) -> [a] -> [([a], Int)]
 findIndicesTuples f as = map (appendFst as) . findIndices f $ as
+
+-- | like 'minimum' but returns the (first) index
+minimumIndex :: Ord a => [a] -> Int
+minimumIndex = minimumIndexBy compare
+
+-- | like 'minimumBy' but returns the (first) index
+minimumIndexBy :: Ord a => (a -> a -> Ordering) -> [a] -> Int
+minimumIndexBy f = fst . minimumBy (curry $ uncurry f . map12 snd) . zip [0..]
+
+-- | like 'maximum' but returns the (first) index
+maximumIndex :: Ord a => [a] -> Int
+maximumIndex = maximumIndexBy compare
+
+-- | like 'maximumBy' but returns the (first) index
+maximumIndexBy :: Ord a => (a -> a -> Ordering) -> [a] -> Int
+maximumIndexBy f = fst . maximumBy (curry $ uncurry f . map12 snd) . zip [0..]
 
 -- | replace the element at the given position by a given list of elements
 --
