@@ -17,20 +17,20 @@ module Chorale.Common (
     (.*),
     (.**),
     (.***),
-    curryM2,
-    curryMM2,
+    uncurryM2,
+    uncurryMM2,
     curry3,
     uncurry3,
-    curryM3,
-    curryMM3,
+    uncurryM3,
+    uncurryMM3,
     curry4,
     uncurry4,
-    curryM4,
-    curryMM4,
+    uncurryM4,
+    uncurryMM4,
     curry5,
     uncurry5,
-    curryM5,
-    curryMM5,
+    uncurryM5,
+    uncurryMM5,
     -- * Tuples
     -- ** Generating Tuples
     appendFst,
@@ -181,13 +181,13 @@ infixr 8 .***
 (.***) :: (e -> f) -> (a -> b -> c -> d -> e) -> a -> b -> c -> d -> f
 (.***) = (.) . (.**)
 
--- | 'curry' for two monadic arguments
-curryM2 :: (Functor m, Monad m) => (a -> b -> x) -> (m a, m b) -> m x
-curryM2 f t = uncurry f <$> sequence2 t
+-- | 'uncurry' for two monadic arguments
+uncurryM2 :: (Functor m, Monad m) => (a -> b -> x) -> (m a, m b) -> m x
+uncurryM2 f t = uncurry f <$> sequence2 t
 
--- | 'curry' for two monadic arguments with monadic function
-curryMM2 :: (Functor m, Monad m) => (a -> b -> m x) -> (m a, m b) -> m x
-curryMM2 = join .* curryM2
+-- | 'uncurry' for two monadic arguments with monadic function
+uncurryMM2 :: (Functor m, Monad m) => (a -> b -> m x) -> (m a, m b) -> m x
+uncurryMM2 = join .* uncurryM2
 
 -- | 'curry' for three arguments
 {-# INLINE curry3 #-}
@@ -199,13 +199,13 @@ curry3 f a b c = f (a, b, c)
 uncurry3 :: (a -> b -> c -> d) -> (a, b, c) -> d
 uncurry3 f (a, b, c) = f a b c
 
--- | 'curry' for three monadic arguments
-curryM3 :: (Functor m, Monad m) => (a -> b -> c -> x) -> (m a, m b, m c) -> m x
-curryM3 f t = uncurry3 f <$> sequence3 t
+-- | 'uncurry' for three monadic arguments
+uncurryM3 :: (Functor m, Monad m) => (a -> b -> c -> x) -> (m a, m b, m c) -> m x
+uncurryM3 f t = uncurry3 f <$> sequence3 t
 
--- | 'curry' for three monadic arguments with monadic function
-curryMM3 :: (Functor m, Monad m) => (a -> b -> c -> m x) -> (m a, m b, m c) -> m x
-curryMM3 = join .* curryM3
+-- | 'uncurry' for three monadic arguments with monadic function
+uncurryMM3 :: (Functor m, Monad m) => (a -> b -> c -> m x) -> (m a, m b, m c) -> m x
+uncurryMM3 = join .* uncurryM3
 
 -- | 'curry' for four arguments
 {-# INLINE curry4 #-}
@@ -217,13 +217,13 @@ curry4 f a b c d = f (a, b, c, d)
 uncurry4 :: (a -> b -> c -> d -> e) -> (a, b, c, d) -> e
 uncurry4 f (a, b, c, d) = f a b c d
 
--- | 'curry' for four monadic arguments
-curryM4 :: (Functor m, Monad m) => (a -> b -> c -> d -> x) -> (m a, m b, m c, m d) -> m x
-curryM4 f t = uncurry4 f <$> sequence4 t
+-- | 'uncurry' for four monadic arguments
+uncurryM4 :: (Functor m, Monad m) => (a -> b -> c -> d -> x) -> (m a, m b, m c, m d) -> m x
+uncurryM4 f t = uncurry4 f <$> sequence4 t
 
--- | 'curry' for four monadic arguments with monadic function
-curryMM4 :: (Functor m, Monad m) => (a -> b -> c -> d -> m x) -> (m a, m b, m c, m d) -> m x
-curryMM4 = join .* curryM4
+-- | 'uncurry' for four monadic arguments with monadic function
+uncurryMM4 :: (Functor m, Monad m) => (a -> b -> c -> d -> m x) -> (m a, m b, m c, m d) -> m x
+uncurryMM4 = join .* uncurryM4
 
 -- | 'curry' for five arguments
 {-# INLINE curry5 #-}
@@ -235,13 +235,13 @@ curry5 f a b c d e = f (a, b, c, d, e)
 uncurry5 :: (a -> b -> c -> d -> e -> f) -> (a, b, c, d, e) -> f
 uncurry5 f (a, b, c, d, e) = f a b c d e
 
--- | 'curry' for five monadic arguments
-curryM5 :: (Functor m, Monad m) => (a -> b -> c -> d -> e -> x) -> (m a, m b, m c, m d, m e) -> m x
-curryM5 f t = uncurry5 f <$> sequence5 t
+-- | 'uncurry' for five monadic arguments
+uncurryM5 :: (Functor m, Monad m) => (a -> b -> c -> d -> e -> x) -> (m a, m b, m c, m d, m e) -> m x
+uncurryM5 f t = uncurry5 f <$> sequence5 t
 
--- | 'curry' for five monadic arguments with monadic function
-curryMM5 :: (Functor m, Monad m) => (a -> b -> c -> d -> e -> m x) -> (m a, m b, m c, m d, m e) -> m x
-curryMM5 = join .* curryM5
+-- | 'uncurry' for five monadic arguments with monadic function
+uncurryMM5 :: (Functor m, Monad m) => (a -> b -> c -> d -> e -> m x) -> (m a, m b, m c, m d, m e) -> m x
+uncurryMM5 = join .* uncurryM5
 
 -- --== TUPLES
 -- --== GENERATING TUPLES
