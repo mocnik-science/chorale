@@ -1,5 +1,5 @@
 name:           chorale
-version:        0.1.5
+version:        0.1.6
 homepage:       https://github.com/mocnik-science/chorale
 bug-reports:    https://github.com/mocnik-science/chorale/issues
 synopsis:       A module containing basic functions that the prelude does not offer

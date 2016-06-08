@@ -111,6 +111,7 @@ module Chorale.Common (
     const3,
     const4,
     const5,
+    applyIf,
     -- * Ordering
     compareUsing,
     -- * Comparing and Sorting
@@ -579,6 +580,11 @@ const4 a _ _ _ _ = a
 -- | like 'const' but with 5 arguments
 const5 :: a -> b -> c -> d -> e -> f -> a
 const5 a _ _ _ _ _ = a
+
+-- | apply an endomorphism only if the given boolean value is true
+applyIf :: Bool -> (a -> a) -> a -> a
+applyIf False _ = id
+applyIf True f = f
 
 -- --== ORDERING
 
