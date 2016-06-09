@@ -64,7 +64,7 @@ testGroupCommon = testGroup "FBM.Common.Common" [
         testProperty "takeToFirst" propTakeToFirst,
         testProperty "splitOnFirst" propSplitOnFirst,
         testProperty "nubOrd" propNubOrd,
-        testProperty "nubOrdBy'" propNubOrdBy',
+        testProperty "nubOrdBy" propNubOrdBy,
         testProperty "sublistByIndex" propSublistByIndex,
         testProperty "replaceInList 1" propReplaceInList1,
         testProperty "replaceInList 2" propReplaceInList2,
@@ -105,9 +105,9 @@ propSplitOnFirst x xs = ((\(as, bs) -> as ++ maybe [] ([x] ++) bs) . splitOnFirs
 propNubOrd :: [Int] -> Bool
 propNubOrd = uncurry (==) . map21 (nubOrd, nub)
 
--- | @nubOrdBy' f = nubBy (equaling f)@
-propNubOrdBy' :: Int -> [(Int, Int)] -> Bool
-propNubOrdBy' i = uncurry (==) . map21 (nubOrdBy' fst, nubBy $ equaling fst)
+-- | @nubOrdBy f = nubBy (equaling f)@
+propNubOrdBy :: Int -> [(Int, Int)] -> Bool
+propNubOrdBy i = uncurry (==) . map21 (nubOrdBy fst, nubBy $ equaling fst)
 
 -- | @map21 (head, last) . sublistByIndex (i, j) $ [0..] == (i, j)@
 propSublistByIndex :: Int -> Int -> Property

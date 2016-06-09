@@ -128,7 +128,7 @@ module Chorale.Common (
     takeToFirst,
     splitOnFirst,
     nubOrd,
-    nubOrdBy',
+    nubOrdBy,
     zipWithDefault,
     subset,
     subsets,
@@ -671,10 +671,10 @@ nubOrd = s Set.empty where
 
 -- | like 'nubBy' but requires 'b' to be an instance of 'Ord'
 --
--- @nubOrdBy' f = nubBy (equaling f)@
--- The original 'nubBy' is O(n^2) on lists of length n. 'nubOrdBy'' is O(n log(n)).
-nubOrdBy' :: Ord b => (a -> b) -> [a] -> [a]
-nubOrdBy' f = s Map.empty where
+-- @nubOrdBy f = nubBy (equaling f)@
+-- The original 'nubBy' is O(n^2) on lists of length n. 'nubOrdBy' is O(n log(n)).
+nubOrdBy :: Ord b => (a -> b) -> [a] -> [a]
+nubOrdBy f = s Map.empty where
     s _ [] = []
     s m (x:xs)
         | Map.member (f x) m = s m xs
