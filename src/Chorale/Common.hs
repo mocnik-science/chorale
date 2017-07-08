@@ -165,6 +165,8 @@ module Chorale.Common (
     mapRight,
     fromLeft,
     fromRight,
+    fromLeftMay,
+    fromRightMay,
     Either3(..)) where
 
 import Control.Monad
@@ -838,6 +840,16 @@ fromLeft _ = error "Error: fromLeft on Right"
 fromRight :: Either a b -> b
 fromRight (Right b) = b
 fromRight _ = error "Error: fromRight on Left"
+
+-- | safe variant of 'fromLeft'
+fromLeftMay :: Either a b -> Maybe a
+fromLeftMay (Left a) = Just a
+fromLeftMay _ = Nothing
+
+-- | safe variant of 'fromRight'
+fromRightMay :: Either a b -> Maybe b
+fromRightMay (Right b) = Just b
+fromRightMay _ = Nothing
 
 -- | 'Either'-like type for 3 values
 data Either3 a b c = E1 a | E2 b | E3 c
